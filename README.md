@@ -36,8 +36,8 @@ LinkWise AI is a web-based question-answering bot that takes a website URL as in
 1. **Run the Flask application**:
    ```bash
         python app.py
-2.Access the web application: Open your web browser and go to http://127.0.0.1:5000
-3.Use the application:
+2.**Access the web application**: Open your web browser and go to http://127.0.0.1:5000
+3.**Use the application**:
   1.Enter the website URL in the input field.
   2.Type your question related to the website's content.
   3.Click "Get Answer" to receive the response from the bot.
