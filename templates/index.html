@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Query Link Bot</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Query Link Bot</h1>
+    <form id="qa-form">
+      <label for="url">Website URL:</label>
+      <input type="url" id="url" name="url" required>
+
+      <label for="question">Question:</label>
+      <input type="text" id="question" name="question" required>
+
+      <button type="submit">Get Answer <i id="loading-icon" class="fas fa-spinner fa-spin invisible"></i></button>
+    </form>
+    <div id="result">
+      <h2>Answer:</h2>
+      <p id="answer"></p>
+    </div>
+  </div>
+
+  <script src="https://kit.fontawesome.com/your-fontawesome-kit-code.js" crossorigin="anonymous"></script>
+  <script>
+    document.getElementById("qa-form").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const url = document.getElementById("url").value;
+      const question = document.getElementById("question").value;
+
+      const loadingIcon = document.getElementById("loading-icon");
+      loadingIcon.classList.remove("invisible"); // Show loading icon
+
+      const response = await fetch("/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `url=${encodeURIComponent(url)}&question=${encodeURIComponent(question)}`
+      });
+
+      loadingIcon.classList.add("invisible"); // Hide loading icon
+
+      const data = await response.json();
+      if (data.answer) {
+        document.getElementById("answer").textContent = data.answer;
+      } else {
+        document.getElementById("answer").textContent = data.error;
+      }
+    });
+  </script>
+</body>
+</html>
